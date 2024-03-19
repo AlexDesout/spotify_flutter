@@ -48,7 +48,7 @@ class _AlbumNewsScreenState extends State<AlbumNewsScreen> {
                 _albums[index].cover,
               ),
               title: Text(_albums[index].name),
-              subtitle: Text(_albums[index].nameArtist),
+              subtitle: Text(_albums[index].artistNames[0]),
               onTap: () {
                 context.go("/a/albumdetails/${_albums[index].id}");
               },

@@ -1,8 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import '../classes/album.dart';
-
-const token = 'BQBvV3Sd_eDBTX4KfLt_j-PboF17A40EADg-_1wOYmDNdIMfYeTFpy1FL2ee2w3x5cQbmc1D2Nw9M69mPlCUCOaTnH9WN_bz5w5P8fJgJclBfSlz1fE';
+import '../token.dart';
 
 
 // Récupérer les derniers albums
