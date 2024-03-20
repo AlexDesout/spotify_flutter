@@ -61,10 +61,8 @@ final GoRouter router = GoRouter(
                     builder: (BuildContext context, GoRouterState state) => AlbumDetailScreen(id: state.pathParameters["id"]!),
                   ),
                   GoRoute(
-                    path: 'artistedetails',
-                    builder: (BuildContext context, GoRouterState state) {
-                      return const ArtisteDetailScreen();
-                    },
+                    path: 'artistedetails/:idArtist',
+                    builder: (BuildContext context, GoRouterState state) => ArtisteDetailScreen(idArtist: state.pathParameters['idArtist']!)
                   ),
               ],
             ),

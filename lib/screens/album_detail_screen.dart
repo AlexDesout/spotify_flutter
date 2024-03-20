@@ -7,8 +7,6 @@ import '../providers/chanson_provider.dart';
 
 /// The details screen
 class AlbumDetailScreen extends StatefulWidget {
-  /// Constructs a [AlbumDetailScreen]
-
   final String id;
   const AlbumDetailScreen({Key? key, required this.id}) : super(key: key);
 
@@ -17,8 +15,9 @@ class AlbumDetailScreen extends StatefulWidget {
 }
 
 class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
-  late Album _album;
-  late List<Chanson> _tracklist;
+  late Album _album =
+      Album(id: '', idArtist: '', artistNames: [], artistIds: [], cover: '', name: '');
+  late List<Chanson> _tracklist = [];
 
   @override
   void initState() {
@@ -35,6 +34,8 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
       _album = album;
       _tracklist = trackList;
     });
+
+    // print(_album.artistNames);
   }
 
   @override
@@ -73,12 +74,19 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
 
                   // Liste des artistes
                   Wrap(
-                    children: _album.artistNames.map((artist) {
+                    children: List.generate(_album.artistNames.length, (index) {
+                      String artistName = _album.artistNames[index];
+                      String artistId = _album.artistIds[index];
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
-                        child: Chip(label: Text(artist)),
+                        child: GestureDetector(
+                          onTap: () {
+                            context.go('/a/artistedetails/$artistId');
+                          },
+                          child: Chip(label: Text(artistName)),
+                        ),
                       );
-                    }).toList(),
+                    }),
                   ),
                 ],
               ),
@@ -97,10 +105,6 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                   );
                 },
               ),
-            ),
-            ElevatedButton(
-              onPressed: () => context.go('/a/artistedetails'),
-              child: const Text('Go Artiste Detail'),
             ),
           ],
         ),
