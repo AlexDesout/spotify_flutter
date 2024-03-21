@@ -70,31 +70,40 @@ Future<List<Chanson>> fetchArtistTopTracks(String id) async {
 }
 
 
+// Chercher une liste de tracks
+Future<List<Chanson>> fetchSearchTracks(String query) async {
+  List<Chanson> searchTracks = [];
 
-// // Récupérer un album
-// Future<Album> fetchSingleAlbum(String id) async {
-//   Album album;
+  var url = Uri.parse(
+      'https://api.spotify.com/v1/search?q=${Uri.encodeQueryComponent(query)}&type=track');
+  // print(url);
 
-//   var url = Uri.parse('https://api.spotify.com/v1/albums/$id');
+  
 
-//   try {
-//     var response = await http.get(
-//       url,
-//       headers: {
-//         'Authorization': 'Bearer $token',
-//       },
-//     );
+  try {
+    var response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
 
-//     if (response.statusCode == 200) {
-//       var jsonResponse = convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      var jsonResponse = convert.jsonDecode(response.body);
 
-//       album = Album.fromJson(jsonResponse);
-//       return album;
-//     } else {
-//       throw Exception('Failed to load album: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     throw Exception('Failed to load album: $e');
-//   }
-// }
+      var tracksJson = jsonResponse['tracks']['items'];
+
+      for (var trackData in tracksJson) {
+        var track = Chanson.fromJson(trackData);
+        searchTracks.add(track);
+      }
+
+      return searchTracks;
+    } else {
+      throw Exception('Failed to load albums: ${response.statusCode}');
+    }
+  } catch (e) {
+    throw Exception('Failed to load albums: $e');
+  }
+}
 
