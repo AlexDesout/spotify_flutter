@@ -5,12 +5,14 @@ class Chanson {
   // final String idArtist; // : albums/items/artists/id
   final List artistNames; // : /items/artists/name
   final String name; // : albums/items/name
+  final String url; // : albums/items/preview_url
 
   Chanson({
     required this.id,
     // required this.idArtist,
     required this.artistNames,
     required this.name,
+    required this.url,
   });
 
   factory Chanson.fromJson(Map<String, dynamic> data) {
@@ -30,6 +32,7 @@ class Chanson {
       id: data['id']?.toString() ?? "",
       artistNames: artistNames,
       name: data['name']?.toString() ?? "",
+      url: data['preview_url']?.toString() ?? "",
     );
   }
 

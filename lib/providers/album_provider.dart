@@ -68,7 +68,7 @@ Future<List<Album>> fetchSearchAlbums(String query) async {
   List<Album> searchAlbums = [];
 
   var url = Uri.parse('https://api.spotify.com/v1/search?q=${Uri.encodeQueryComponent(query)}&type=album');
-  print(url);
+  // print(url);
 
   try {
     var response = await http.get(

@@ -6,6 +6,8 @@ import 'package:projet_spotify_gorouter/classes/chanson.dart';
 import 'package:projet_spotify_gorouter/providers/chanson_provider.dart';
 import '../providers/album_provider.dart';
 import '../providers/artiste_provider.dart';
+// import 'package:just_audio/just_audio.dart';
+import '../services/audio_player.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Chanson> _searchTracks = [];
   late TextEditingController _searchController;
   late List<bool> _isSelected;
+  final AudioService _audioService = AudioService();
 
   @override
   void initState() {
@@ -99,10 +102,8 @@ class _SearchScreenState extends State<SearchScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
-            mainAxisSize: MainAxisSize
-                .max,
-            mainAxisAlignment: MainAxisAlignment
-                .spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ToggleButtons(
                 isSelected: _isSelected,
@@ -172,12 +173,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             margin: const EdgeInsets.only(top: 20.0),
                             child: ListTile(
                               title: Text(_searchTracks[index].name),
-                              subtitle:
-                                  Text(_searchTracks[index].artistNames[0]),
-                              onTap: () {
-                                // context.go(
-                                //     "/b/artistedetails/${_searchTracks[index].id}");
-                              },
+                              subtitle: Text(_searchTracks[index].url),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.play_arrow),
+                                onPressed: () {
+                                  _audioService
+                                      .playAudio(_searchTracks[index].url);
+                                },
+                              ),
                             ),
                           );
                         },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:projet_spotify_gorouter/classes/chanson.dart';
 import 'package:projet_spotify_gorouter/providers/chanson_provider.dart';
+import 'package:projet_spotify_gorouter/services/audio_player.dart';
 import '../classes/artiste.dart';
 import '../providers/artiste_provider.dart';
 
@@ -18,6 +19,7 @@ class _ArtisteDetailScreenState extends State<ArtisteDetailScreen> {
   late Artiste _artiste =
       Artiste(id: '', followers: '', image: '', name: '', popularity: '');
   late List<Chanson> _topTracks = [];
+  final AudioService _audioService = AudioService();
 
   @override
   void initState() {
@@ -136,6 +138,13 @@ class _ArtisteDetailScreenState extends State<ArtisteDetailScreen> {
                   return ListTile(
                     title: Text(_topTracks[index].name),
                     subtitle: Text(artists),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.play_arrow),
+                      onPressed: () {
+                        // Appel de la fonction d'écoute audio
+                        _audioService.playAudio(_topTracks[index].url);
+                      },
+                    ),
                   );
                 },
               ),

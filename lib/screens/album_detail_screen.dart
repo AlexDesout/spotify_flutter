@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:projet_spotify_gorouter/services/audio_player.dart';
 import '../classes/album.dart';
 import '../classes/chanson.dart';
 import '../providers/album_provider.dart';
@@ -15,9 +16,15 @@ class AlbumDetailScreen extends StatefulWidget {
 }
 
 class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
-  late Album _album =
-      Album(id: '', idArtist: '', artistNames: [], artistIds: [], cover: '', name: '');
+  late Album _album = Album(
+      id: '',
+      idArtist: '',
+      artistNames: [],
+      artistIds: [],
+      cover: '',
+      name: '');
   late List<Chanson> _tracklist = [];
+  final AudioService _audioService = AudioService();
 
   @override
   void initState() {
@@ -102,6 +109,13 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                   return ListTile(
                     title: Text(_tracklist[index].name),
                     subtitle: Text(artists),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.play_arrow),
+                      onPressed: () {
+                        // Appel de la fonction d'écoute audio
+                        _audioService.playAudio(_tracklist[index].url);
+                      },
+                    ),
                   );
                 },
               ),

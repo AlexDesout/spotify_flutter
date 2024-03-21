@@ -19,7 +19,7 @@ Future<Artiste> fetchArtistDetails(String id) async {
 
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
-      print(jsonResponse);
+      // print(jsonResponse);
 
       artiste = Artiste.fromJson(jsonResponse);
       return artiste;
