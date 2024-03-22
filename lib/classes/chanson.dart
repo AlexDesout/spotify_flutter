@@ -1,15 +1,13 @@
-// import 'dart:convert' as convert;
+import 'dart:convert';
 
 class Chanson {
-  final String id; // : albums/items/id
-  // final String idArtist; // : albums/items/artists/id
-  final List artistNames; // : /items/artists/name
-  final String name; // : albums/items/name
-  final String url; // : albums/items/preview_url
+  final String id;
+  final List<String> artistNames;
+  final String name;
+  final String url;
 
   Chanson({
     required this.id,
-    // required this.idArtist,
     required this.artistNames,
     required this.name,
     required this.url,
@@ -34,6 +32,33 @@ class Chanson {
       name: data['name']?.toString() ?? "",
       url: data['preview_url']?.toString() ?? "",
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'artistNames': artistNames,
+      'name': name,
+      'url': url,
+    };
+  }
+
+  factory Chanson.fromMap(Map<String, dynamic> map) {
+    return Chanson(
+      id: map['id'],
+      artistNames: (map['artistNames'] as String).split(', '),
+      name: map['name'],
+      url: map['url'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'artistNames': artistNames.join(', '),
+      'name': name,
+      'url': url,
+    };
   }
 
   @override
